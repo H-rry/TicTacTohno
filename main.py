@@ -48,10 +48,11 @@ def winner(board):
         winner = board[6]
     if board[0] == board[4] == board[8] != 0:
         winner = board[0]
-    if board[3] == board[4] == board[6] != 0:
-        winner = board[3]
+    if board[2] == board[4] == board[6] != 0:
+        winner = board[2]
 
-    if 0 not in board: return 3
+    if 0 not in board: 
+        return 3
 
     return winner
 
@@ -87,20 +88,29 @@ def minimax(board, maximizing_player):
     return best_score, best_move
 
 board = [0,0,0,0,0,0,0,0,0]
-
+def reset_game(board, turn):
+    board = [0,0,0,0,0,0,0,0,0]
+    turn = not turn
+    return board, turn
 while playing:
     
     print_board(board)
     
-
-    if winner(board) != 0:
-        if winner(board) == 1:
+    win = winner(board)
+    if win != 0:
+        if win == 1:
             print("x wins!")
-        if winner(board) == 2:
+        if win == 2:
             print("o wins!")
-        if winner(board) == 3:
+        if win == 3:
             print("draw!")
-        break
+        play_again = input("play again: y,n")
+        if play_again == 'y':
+            board, turn = reset_game(board, turn)
+        elif play_again == 'n':
+            playing = False
+            break
+
     if turn == True:
         print("what's your next move? in form xy")
         board, turn = make_move(input(), board, turn)
@@ -108,10 +118,4 @@ while playing:
         move = minimax(board, turn)[1]
         board[move] = 2
         turn = not turn
-    
-
-
-    if input() == 'N':
-        playing = False
-    
 
