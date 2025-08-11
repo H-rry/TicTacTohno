@@ -3,6 +3,7 @@ import os
 playing = True
 turn = True
 first_player = True
+
 def print_board(board): # A function that takes in the board (a single dimensional array of length 9) and prints it in the pretty format you can see
 
     os.system('clear') # change to 'cls' if you're using a windows based terminal
@@ -62,7 +63,7 @@ def minimax(board, maximizing_player): # minimax algorithm always finds the mini
         if value == 3: return (0, None)
 
     if maximizing_player: # then recursively finds the path to that player winning
-        best_score = -100
+        best_score = -101
         best_move = None
         for i in range(9):
             if board[i] == 0:
@@ -73,7 +74,7 @@ def minimax(board, maximizing_player): # minimax algorithm always finds the mini
                     best_move = i
                     best_score = value
     else:
-        best_score = 100
+        best_score = 101
         best_move = None
         for i in range(9):
             if board[i] == 0:
@@ -95,7 +96,8 @@ while playing: # game loop
     if board == [0,0,0,0,0,0,0,0,0]: # keeps track of who goes first
         turn == first_player
         first_player != first_player
-
+    
+    resetting = False
     print_board(board)
     
     win = winner(board)
@@ -110,10 +112,11 @@ while playing: # game loop
         
         play_again = input("play again: y,n")# if game over then chicks if they want to play again
         if play_again == 'y':
-            board2 = reset_game(board)
+            board = reset_game(board)
         elif play_again == 'n':
             playing = False
             break
+    
 
     if turn == True: # player turn and computer turn
         print("what's your next move? in form xy")
